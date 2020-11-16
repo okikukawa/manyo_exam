@@ -1,4 +1,25 @@
-# README
+バージョン情報
+---
+ruby 2.6.5
+rails 5.2.4
+gem 3.0.3
+
+Herokuへのデプロイ手順
+---
+前提条件
+・herokuがインストール済みであること
+・herokuへログインできること
+
+1. アプリケーションを作成
+`heroku create`
+2. herokuへpush
+`git push heroku master`
+3. テーブル作成
+`heroku run rails db:migrate`
+
+
+
+
 tasksテーブル
 ---
 |Column|Type|Options|
@@ -19,13 +40,15 @@ usersテーブル
 |email|string|
 |password_digest|string|
 
+
 labelsテーブル
 ---
 |Column|Type|Options|
 |------|----|-------|
 |name|string|
 
-labelsテーブル
+
+task_labelテーブル
 ---
 |Column|Type|Options|
 |------|----|-------|
