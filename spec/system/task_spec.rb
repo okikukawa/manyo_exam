@@ -12,6 +12,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit new_task_path
         fill_in "タイトル", with: "リュック買う"
         fill_in "詳細", with: "メルカリで見てみる"
+        fill_in "終了期限", with: "002020-11-18"
         click_button '登録する'
         expect(page).to have_content 'リュック買う'
       end
@@ -30,10 +31,16 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
     context 'タスクの終了期限でを降順でソートした場合' do
-      it '新しいタスクが一番上に表示される' do
+      it '終了期限が一番遠いタスクが一番上に表示される' do
         visit new_task_path
-        
+        fill_in "タイトル", with: "step3終わらせる"
+        fill_in "詳細", with: "最後にpullrequestを忘れない"
+        fill_in "終了期限", with: "002020-11-18"
+        click_button '登録する'
+        visit tasks_path
+        click_on '終了期限でソートする'
         task_list = all('.task_row')
+        # save_and_open_page
         expect(task_list[0]).to have_content 'Factoryで作ったデフォルトのタイトル２'
       end
     end

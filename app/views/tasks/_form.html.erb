@@ -1,9 +1,10 @@
 <% if @task.errors.any? %>
   <h2><%= @task.errors.count %>件のエラーがあります。</h2>
   <% @task.errors.full_messages.each do|msg| %>
-    <%= msg %>
+    <%= msg %><br>
   <% end %>
 <% end %>
+<br>
 <%= form_with(model:@task,local:true)do|f| %>
   <div>
     <%= f.label :title %><br>
@@ -16,6 +17,10 @@
   <div>
     <%= f.label :deadline %><br>
     <%= f.date_field :deadline %>
+  </div>
+  <div>
+    <%= f.label :status %><br>
+    <%= f.select :status,[["未着手","未着手"],["着手中","着手中"],["完了","完了"]], include_blank:"ステータスを入力" %>
   </div>
   <%= f.submit "登録する" %>
 <% end %>
