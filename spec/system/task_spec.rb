@@ -29,6 +29,14 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(task_list[0]).to have_content 'Factoryで作ったデフォルトのタイトル２'
       end
     end
+    context 'タスクの終了期限でを降順でソートした場合' do
+      it '新しいタスクが一番上に表示される' do
+        visit new_task_path
+        
+        task_list = all('.task_row')
+        expect(task_list[0]).to have_content 'Factoryで作ったデフォルトのタイトル２'
+      end
+    end
   end
   describe '詳細表示機能' do
      context '任意のタスク詳細画面に遷移した場合' do

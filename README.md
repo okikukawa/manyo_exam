@@ -1,7 +1,7 @@
 バージョン情報
 ---
-ruby 2.6.5
-rails 5.2.4
+ruby 2.6.5<br>
+rails 5.2.4<br>
 gem 3.0.3
 
 Herokuへのデプロイ手順
