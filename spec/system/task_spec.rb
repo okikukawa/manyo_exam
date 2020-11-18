@@ -13,6 +13,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         fill_in "タイトル", with: "リュック買う"
         fill_in "詳細", with: "メルカリで見てみる"
         fill_in "終了期限", with: "002020-11-18"
+        select "着手中", from: "ステータス"
         click_button '登録する'
         expect(page).to have_content 'リュック買う'
       end
@@ -36,11 +37,11 @@ RSpec.describe 'タスク管理機能', type: :system do
         fill_in "タイトル", with: "step3終わらせる"
         fill_in "詳細", with: "最後にpullrequestを忘れない"
         fill_in "終了期限", with: "002020-11-18"
+        select "着手中", from: "ステータス"
         click_button '登録する'
         visit tasks_path
         click_on '終了期限でソートする'
         task_list = all('.task_row')
-        # save_and_open_page
         expect(task_list[0]).to have_content 'Factoryで作ったデフォルトのタイトル２'
       end
     end
@@ -53,5 +54,33 @@ RSpec.describe 'タスク管理機能', type: :system do
          expect(page).to have_content 'task'
        end
      end
+  end
+  describe '検索機能' do
+    before do
+      visit tasks_path
+    end
+    context 'タイトルを検索した場合' do
+      it '検索ワードを含んだタスクが表示される'do
+        fill_in "search_textarea", with:"タイトル２"
+        click_button '検索'
+        expect(page).to have_content 'タイトル２'
+      end
+    end
+    context 'ステータスを検索した場合' do
+      it '検索されたステータスのタスクが表示される'do
+        select "未着手", from: "search_status"
+        click_button '検索'
+        expect(page).to have_content 'task'
+      end
+    end
+    context 'タイトルとステータスを入力して検索した場合' do
+      it '検索ワードがタイトルに含まれ、かつ選択されたステータスが一致するタスクが絞られる'do
+        fill_in "search_textarea", with:"タイトル１"
+        select "未着手", from: "search_status"
+        click_button '検索'
+        expect(page).to have_content 'Factoryで作ったデフォルトのタイトル１'
+        # save_and_open_page
+      end
+    end
   end
 end
