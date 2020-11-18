@@ -1,17 +1,19 @@
 <%= form_with(model: @task, url: tasks_path, method: :get,local: true) do|f| %>
   <%= f.text_field :title, placeholder:"タイトルで検索", id:"search_textarea" %>
-  <%= f.select :status, Task.task_statuses.keys, {prompt: "選択してください"}, id:"search_status" %>
+  <%= f.select :status, Task.task_statuses.keys, include_blank:"選択してください", id:"search_status" %>
   <%= f.submit "検索" %>
 <% end %>
 <h1>タスク一覧</h1>
 <p><%= notice %></p>
 <%= link_to '終了期限でソートする',tasks_path(sort_expired: "true") %>
+<%= link_to '優先順位でソートする',tasks_path(sort_priority: "true") %>
 <table>
   <tr>
     <th>タスク</th>
     <th>終了期限</th>
     <th>詳細</th>
     <th>ステータス</th>
+    <th>優先度</th>
   </tr>
   <% @task.each do|task| %>
   <tr>
@@ -19,11 +21,12 @@
     <td><%= task.deadline %></td>
     <td><%= task.content %></td>
     <td><%= task.status %></td>
+    <td><%= task.priority %></td>
     <td><%= link_to '詳細',task_path(task.id) %></td>
     <td><%= link_to '編集',edit_task_path(task.id) %></td>
     <td><%= link_to '削除',task_path(task.id), method: :delete, data:{ confirm: "削除してもよろしいですか？"} %></td>
   </tr>
   <% end %>
 </table>
-<p><%= link_to 'タスク登録',new_task_path %></p>
+<p><%= link_to 'タスクを新しく登録する',new_task_path %></p>
 <%= link_to 'TOP',tasks_path %>

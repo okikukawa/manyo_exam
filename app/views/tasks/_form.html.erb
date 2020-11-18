@@ -20,7 +20,11 @@
   </div>
   <div>
     <%= f.label :status %><br>
-    <%= f.select :status,[["未着手","未着手"],["着手中","着手中"],["完了","完了"]], include_blank:"ステータスを入力" %>
+    <%= f.select :status,Task.task_statuses.keys, include_blank:"選択してください" %>
+  </div>
+  <div>
+    <%= f.label :priority %><br>
+    <%= f.select :priority,Task.task_priorities.keys, include_blank:"選択してください" %>
   </div>
   <%= f.submit "登録する" %>
 <% end %>
