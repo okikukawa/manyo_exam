@@ -6,7 +6,7 @@ class Task < ApplicationRecord
   enum task_status:{
     未着手:1, 着手中:2, 完了:3
   }
-  enum task_priority:{
+  enum task_priority: {
     低:1, 中:2, 高:3
   }
   scope :sort_created_at, -> { order(created_at: "DESC") }
