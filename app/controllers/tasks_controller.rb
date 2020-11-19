@@ -26,6 +26,7 @@ class TasksController < ApplicationController
   end
   def create
     @task = Task.new(task_params)
+    # binding.irb
     if @task.save
       redirect_to task_path(@task.id), notice:"タスクを登録しました。"
     else

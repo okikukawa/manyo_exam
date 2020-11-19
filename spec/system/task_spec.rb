@@ -42,15 +42,17 @@ RSpec.describe 'タスク管理機能', type: :system do
         select "中", from: "優先度"
         click_button '登録する'
         visit tasks_path
-        click_on '終了期限でソートする'
+        click_on '終了期限 ▼'
         task_list = all('.task_row')
         expect(task_list[0]).to have_content 'Factoryで作ったデフォルトのタイトル２'
       end
     end
     context 'タスクの優先順位で降順でソートした場合' do
       it '優先度が高いタスクが一番上に表示される' do
-        click_on '優先順位でソートする'
+        click_on '優先度 ▼'
+        sleep 1
         task_list = all('.task_row')
+        save_and_open_page
         expect(task_list[0]).to have_content 'task'
       end
     end
@@ -88,7 +90,6 @@ RSpec.describe 'タスク管理機能', type: :system do
         select "未着手", from: "ステータス"
         click_button '検索'
         expect(page).to have_content 'Factoryで作ったデフォルトのタイトル１'
-        # save_and_open_page
       end
     end
   end

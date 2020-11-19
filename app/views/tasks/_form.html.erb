@@ -24,7 +24,7 @@
   </div>
   <div>
     <%= f.label :priority %><br>
-    <%= f.select :priority, Task.task_priorities.keys, include_blank:"選択してください" %>
+    <%= f.select :priority, Task.priorities.keys, include_blank:"選択してください" %>
   </div>
   <%= f.submit "登録する" %>
 <% end %>

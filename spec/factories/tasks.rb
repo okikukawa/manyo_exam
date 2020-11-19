@@ -11,6 +11,6 @@ FactoryBot.define do
     content { 'Factoryで作ったデフォルトのコンテント２' }
     deadline { '002020-11-30' }
     status { '完了' }
-    priority { '低' }
+    priority { '中' }
   end
 end
