@@ -77,7 +77,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context 'ステータスを検索した場合' do
       it '検索されたステータスのタスクが表示される'do
-        select "未着手", from: "ステータスで検索"
+        select "未着手", from: "ステータス"
         click_button '検索'
         expect(page).to have_content '着手中'
       end
@@ -85,7 +85,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     context 'タイトルとステータスを入力して検索した場合' do
       it '検索ワードがタイトルに含まれ、かつ選択されたステータスが一致するタスクが絞られる'do
         fill_in "search_textarea", with:"タイトル１"
-        select "未着手", from: "ステータスで検索"
+        select "未着手", from: "ステータス"
         click_button '検索'
         expect(page).to have_content 'Factoryで作ったデフォルトのタイトル１'
         # save_and_open_page
