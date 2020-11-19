@@ -52,7 +52,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         click_on '優先度 ▼'
         sleep 1
         task_list = all('.task_row')
-        save_and_open_page
+        # save_and_open_page
         expect(task_list[0]).to have_content 'task'
       end
     end
