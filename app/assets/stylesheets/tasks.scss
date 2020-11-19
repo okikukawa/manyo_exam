@@ -30,6 +30,9 @@ td, th{
   border-bottom: 1px solid #dddddd;
   text-align: center;
 }
+.sort:hover{
+  text-decoration: none;
+}
 .data_detail, .data_delete{
   padding:10px 0px;
 }
