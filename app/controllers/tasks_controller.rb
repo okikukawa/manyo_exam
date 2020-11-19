@@ -3,21 +3,21 @@ class TasksController < ApplicationController
   def index
     if params[:task].present?
       if params[:task][:title].present? && params[:task][:status].present?
-        @task = Task.search_title(params[:task][:title]).search_status(params[:task][:status])
+        @task = Task.search_title(params[:task][:title]).search_status(params[:task][:status]).pagenation(params)
       elsif params[:task][:title].present?
-        @task = Task.search_title(params[:task][:title])
+        @task = Task.search_title(params[:task][:title]).pagenation(params)
       elsif params[:task][:status].present?
-        @task = Task.search_status(params[:task][:status])
+        @task = Task.search_status(params[:task][:status]).pagenation(params).pagenation(params)
       else
-        @task = Task.sort_created_at
+        @task = Task.sort_created_at.pagenation(params)
       end
     else
       if params[:sort_expired].present?
-        @task = Task.all.sort_deadline
+        @task = Task.all.sort_deadline.pagenation(params)
       elsif params[:sort_priority].present?
-        @task = Task.all.sort_priority
+        @task = Task.all.sort_priority.pagenation(params)
       else
-        @task = Task.sort_created_at
+        @task = Task.sort_created_at.pagenation(params)
       end
     end
   end
