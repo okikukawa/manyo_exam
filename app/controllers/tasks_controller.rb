@@ -1,13 +1,32 @@
 class TasksController < ApplicationController
   before_action :set_task,only:[ :show, :edit, :update, :destroy ]
   def index
-    @task = Task.all.order(created_at: "DESC")
+    if params[:task].present?
+      if params[:task][:title].present? && params[:task][:status].present?
+        @task = Task.search_title(params[:task][:title]).search_status(params[:task][:status]).pagination(params)
+      elsif params[:task][:title].present?
+        @task = Task.search_title(params[:task][:title]).pagination(params)
+      elsif params[:task][:status].present?
+        @task = Task.search_status(params[:task][:status]).pagination(params).pagenation(params)
+      else
+        @task = Task.sort_created_at.pagination(params)
+      end
+    else
+      if params[:sort_expired].present?
+        @task = Task.all.sort_deadline.pagination(params)
+      elsif params[:sort_priority].present?
+        @task = Task.all.sort_priority.pagination(params)
+      else
+        @task = Task.sort_created_at.pigenation(params)
+      end
+    end
   end
   def new
     @task = Task.new
   end
   def create
     @task = Task.new(task_params)
+    # binding.irb
     if @task.save
       redirect_to task_path(@task.id), notice:"タスクを登録しました。"
     else
@@ -31,7 +50,7 @@ class TasksController < ApplicationController
   end
   private
   def task_params
-    params.require(:task).permit(:title,:content)
+    params.require(:task).permit(:title,:content,:deadline,:status,:priority)
   end
   def set_task
     @task = Task.find(params[:id])

@@ -1,18 +1,53 @@
-<h1>タスク一覧</h1>
-<p><%= notice %></p>
-<table>
-  <tr>
-    <th>タスク</th>
-    <th>内容</th>
-  </tr>
-  <% @task.each do|task| %>
-  <tr>
-    <td class="task_row"><%= task.title %></td>
-    <td><%= task.content %></td>
-    <td><%= link_to '詳細',task_path(task.id) %></td>
-    <td><%= link_to '編集',edit_task_path(task.id) %></td>
-    <td><%= link_to '削除',task_path(task.id), method: :delete, data:{ confirm: "削除してもよろしいですか？"} %></td>
-  </tr>
+<div class="container">
+  <h3>タスク一覧</h3>
+  <% if notice.present? %>
+    <p class="alert alert-success"><%= notice %></p>
   <% end %>
-</table>
-<p><%= link_to 'タスク登録',new_task_path %></p>
+  <div class="search_container">
+    <%= form_with(model: @task, url: tasks_path, method: :get,local: true) do|f| %>
+      <div class="search_title">
+        <%= f.label :title, "タスク名　" %>
+        <%= f.text_field :title, placeholder:"タスク名を入力", id:"search_textarea" %>
+      </div>
+      <div class="search_status">
+        <%= f.label :status, '　ステータス　' %>
+        <%= f.select :status, Task.task_statuses.keys, include_blank:"-" %>
+      </div>
+      <div class="search_btn">
+        <%= f.submit "検索" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="task_count_now">
+    <p>現在<%= @task.count %>件のタスクが表示されています</p>
+  </div>
+  <div class="main_container">
+    <table>
+      <div class="task_item">
+        <tr>
+          <th>タスク名</th>
+          <th>詳細</th>
+          <th>ステータス</th>
+          <th><%= link_to '終了期限 ▼',tasks_path(sort_expired: "true"), class:"sort" %></th>
+          <th><%= link_to '優先度 ▼',tasks_path(sort_priority: "true"), class:"sort" %></th>
+        </tr>
+      </div>
+      <% @task.each do|task| %>
+        <tr>
+          <td class="task_row"><%= task.title %></td>
+          <td><%= task.content %></td>
+          <td><%= task.status %></td>
+          <td><%= task.deadline %></td>
+          <td><%= task.priority %></td>
+          <td class="data_detail"><%= link_to '詳細',task_path(task.id),class:"label label-primary" %></td>
+          <td class="data_edit"><%= link_to '編集',edit_task_path(task.id),class:"label label-primary" %></td>
+          <td class="data_delete"><%= link_to '削除',task_path(task.id), method: :delete, data:{ confirm: "削除してもよろしいですか？"} ,class:"label label-danger" %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  <%= link_to '新しくタスクを登録する',new_task_path, class:'btn btn-info' %>
+  <div class="paginate">
+    <%= paginate @task %>
+  </div>
+</div>
