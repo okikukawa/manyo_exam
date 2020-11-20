@@ -50,7 +50,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     context 'タスクの優先順位で降順でソートした場合' do
       it '優先度が高いタスクが一番上に表示される' do
         click_on '優先度 ▼'
-        sleep 1
+        sleep 2
         task_list = all('.task_row')
         # save_and_open_page
         expect(task_list[0]).to have_content 'task'
@@ -81,7 +81,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       it '検索されたステータスのタスクが表示される'do
         select "未着手", from: "ステータス"
         click_button '検索'
-        expect(page).to have_content '着手中'
+        expect(page).to have_content '未着手'
       end
     end
     context 'タイトルとステータスを入力して検索した場合' do
