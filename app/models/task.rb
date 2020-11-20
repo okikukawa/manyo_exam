@@ -12,5 +12,5 @@ class Task < ApplicationRecord
   scope :sort_priority, -> { order(priority: "DESC") }
   scope :search_title, -> (title){ where("title LIKE?","%#{title}%") }
   scope :search_status, -> (status){ where(status: status) }
-  scope :pagenation, -> (params){ page(params[:page]).per(5) }
+  scope :pagination, -> (params){ page(params[:page]).per(5) }
 end
