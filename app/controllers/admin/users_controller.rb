@@ -1,7 +1,8 @@
 class Admin::UsersController < ApplicationController
   before_action :set_admin_user, only:[:show, :edit, :destroy, :update]
+  before_action :ensure_admin_user, only:[:index, :new, :create, :show, :edit, :update, :destroy]
   def index
-    @users = User.select(:id, :name, :email)
+    @users = User.select(:id, :name, :email, :admin)
   end
   def new
     @users = User.new
@@ -19,6 +20,7 @@ class Admin::UsersController < ApplicationController
   def edit
   end
   def update
+    # binding.irb
     if @users.update(user_params)
       redirect_to admin_users_path, notice: "ユーザー情報を変更しました。"
     else
@@ -27,12 +29,13 @@ class Admin::UsersController < ApplicationController
   end
   def destroy
     @users.destroy
-    redirect_to admin_users_path
+    redirect_to admin_users_path, notice: "ユーザーを削除しました。"
   end
   private
   def user_params
     params.require(:user).permit(:name, :email,:password,
-                                  :password_confirmation)
+                                  :password_confirmation,
+                                  :admin)
   end
   def set_admin_user
     @users = User.find(params[:id])

@@ -21,6 +21,16 @@ class ApplicationController < ActionController::Base
       flash[:danger] = 'ログインが必要です。'
       redirect_to new_session_path
     end
-
+  end
+  def ensure_admin_user
+    if logged_in?
+      unless current_user.admin?
+        redirect_to tasks_path
+        flash[:danger] = 'このユーザーにはアクセス権限がありません。'
+      end
+    else
+      flash[:danger] = 'ログインが必要です。'
+      redirect_to new_session_path
+    end
   end
 end
