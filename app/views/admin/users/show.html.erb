@@ -1,0 +1,5 @@
+<h3>ユーザー情報</h3>
+<p>ユーザーID：<%= @users.id %></p>
+<p>ユーザー名：<%= @users.name %></p>
+<p>タスク数：<%= @users.tasks.count %></p>
+<%= link_to 'ユーザー一覧へ', admin_users_path %>
