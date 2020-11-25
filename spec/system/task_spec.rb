@@ -2,7 +2,8 @@ require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
   let!(:task){ FactoryBot.create(:task,title:'task') }
   before do
-    FactoryBot.create(:task)
+    FactoryBot.create(:user)
+    FactoryBot.create(:task, user: user)
     FactoryBot.create(:second_task)
     visit tasks_path
   end
