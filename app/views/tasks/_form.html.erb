@@ -1,5 +1,5 @@
 <% if @task.errors.any? %>
-  <h2><%= @task.errors.count %>件のエラーがあります。</h2>
+  <h3><%= @task.errors.count %>件のエラーがあります。</h3>
   <% @task.errors.full_messages.each do|msg| %>
     <%= msg %><br>
   <% end %>

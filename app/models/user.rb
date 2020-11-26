@@ -12,8 +12,12 @@ class User < ApplicationRecord
 
   def check_admin_count
     @admin_count = User.where(admin: true).count
-    if @admin_count <= 2
-      throw :abort
+    user = User.find_by(id: self.id)
+    if user.admin?
+      if @admin_count < 2
+        errors.add(:base, "最低1ユーザーは管理者権限を持つ必要があります。")
+        throw :abort
+      end
     end
   end
 end

@@ -3,6 +3,7 @@ RSpec.describe 'ユーザー管理機能'do
   before do
     FactoryBot.create(:user)
     FactoryBot.create(:second_user)
+    FactoryBot.create(:third_user)
   end
   describe 'ユーザー登録のテスト'do
     before do
@@ -76,7 +77,6 @@ RSpec.describe 'ユーザー管理機能'do
           expect(page).to have_content 'user2'
         end
         it 'ユーザーの詳細画面にアクセスできる'do
-          # save_and_open_page
           user = User.find_by(name: "テスト次郎")
           visit admin_user_path(user)
           expect(page).to have_content 'ユーザー名：テスト次郎'
@@ -84,12 +84,12 @@ RSpec.describe 'ユーザー管理機能'do
         it 'ユーザーの編集ができる'do
           user = User.find_by(name: "テスト次郎")
           visit edit_admin_user_path(user)
-          fill_in "Name", with: "テスト三郎"
-          fill_in "Email", with: "testsaburo@testsaburo.com"
+          fill_in "Name", with: "テスト四郎"
+          fill_in "Email", with: "testshiro@testshiro.com"
           fill_in "Password", with: "password"
           fill_in "Password confirmation", with: "password"
           click_button '編集する'
-          expect(page).to have_content 'テスト三郎'
+          expect(page).to have_content 'テスト四郎'
           expect(page).not_to have_content 'テスト次郎'
         end
         it 'ユーザーの削除ができる'do

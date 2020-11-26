@@ -20,7 +20,6 @@ class Admin::UsersController < ApplicationController
   def edit
   end
   def update
-    # binding.irb
     if @users.update(user_params)
       redirect_to admin_users_path, notice: "ユーザー情報を変更しました。"
     else
@@ -28,8 +27,17 @@ class Admin::UsersController < ApplicationController
     end
   end
   def destroy
-    @users.destroy
-    redirect_to admin_users_path, notice: "ユーザーを削除しました。"
+    if @users.admin == true
+      if User.where(admin: true).count > 1
+        @users.destroy
+        redirect_to admin_users_path, notice: "ユーザーを削除しました。"
+      else
+        redirect_to admin_users_path, notice: "最低1ユーザーは管理者権限を持つ必要があります。"
+      end
+    else
+      @users.destroy
+      redirect_to admin_users_path, notice: "ユーザーを削除しました。"
+    end
   end
   private
   def user_params
