@@ -13,11 +13,11 @@ class TasksController < ApplicationController
     elsif
       if params[:sort_expired].present?
         @task = current_user.tasks.sort_deadline.pagination(params)
-      else params[:sort_priority].present?
+      elsif params[:sort_priority].present?
         @task = current_user.tasks.sort_priority.pagination(params)
+      else
+        @task = current_user.tasks.sort_created_at.pagination(params)
       end
-    else
-      @task = current_user.tasks.sort_created_at.pagination(params)
     end
   end
   def new
