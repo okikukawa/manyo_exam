@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   before_action :set_task,only:[ :show, :edit, :update, :destroy ]
   before_action :authenticate_user, only:[:index, :new, :show, :edit, :update, :destroy]
+  before_action :ensure_current_user_task_check, only:[:show, :edit, :update, :destroy]
   def index
     if params[:task].present?
       if params[:task][:title].present? && params[:task][:status].present?
