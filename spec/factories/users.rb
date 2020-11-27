@@ -4,10 +4,6 @@ FactoryBot.define do
     email { 'test@test.com' }
     password { 'password' }
     admin { 'true' }
-    before(:create){ User.skip_callback(:update, :before, :check_admin_count) }
-    after(:create){ User.set_callback(:update, :before, :check_admin_count) }
-    before(:create){ User.skip_callback(:destroy, :before, :check_admin_count) }
-    after(:create){ User.set_callback(:destroy, :before, :check_admin_count) }
   end
   factory :second_user, class: User do
     name { 'テスト次郎' }
@@ -18,6 +14,18 @@ FactoryBot.define do
   factory :third_user, class: User do
     name { 'テスト三郎' }
     email { 'testsaburo@testsaburo.com' }
+    password { 'password' }
+    admin { 'true' }
+  end
+  factory :forth_user, class: User do
+    name { 'テスト四郎' }
+    email { 'testshiro@testshiro.com' }
+    password { 'password' }
+    admin { 'true' }
+  end
+  factory :fifth_user, class: User do
+    name { 'テスト五郎' }
+    email { 'testgoro@testgoro.com' }
     password { 'password' }
     admin { 'true' }
   end

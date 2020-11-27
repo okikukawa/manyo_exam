@@ -11,7 +11,6 @@ RSpec.describe 'タスク管理機能', type: :system do
     click_button 'Log in'
     visit tasks_path
   end
-  # let!(:task){ FactoryBot.create(:task, title:'task') }
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
