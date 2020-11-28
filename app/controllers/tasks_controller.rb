@@ -1,23 +1,23 @@
 class TasksController < ApplicationController
   before_action :set_task,only:[ :show, :edit, :update, :destroy ]
+  before_action :authenticate_user, only:[:index, :new, :show, :edit, :update, :destroy]
+  before_action :ensure_current_user_task_check, only:[:show, :edit, :update, :destroy]
   def index
     if params[:task].present?
       if params[:task][:title].present? && params[:task][:status].present?
-        @task = Task.search_title(params[:task][:title]).search_status(params[:task][:status]).pagination(params)
+        @task = current_user.tasks.search_title(params[:task][:title]).search_status(params[:task][:status]).pagination(params)
       elsif params[:task][:title].present?
-        @task = Task.search_title(params[:task][:title]).pagination(params)
-      elsif params[:task][:status].present?
-        @task = Task.search_status(params[:task][:status]).pagination(params).pagenation(params)
-      else
-        @task = Task.sort_created_at.pagination(params)
+        @task = current_user.tasks.search_title(params[:task][:title]).pagination(params)
+      else params[:task][:status].present?
+        @task = current_user.tasks.search_status(params[:task][:status]).pagination(params)
       end
-    else
+    elsif
       if params[:sort_expired].present?
-        @task = Task.all.sort_deadline.pagination(params)
+        @task = current_user.tasks.sort_deadline.pagination(params)
       elsif params[:sort_priority].present?
-        @task = Task.all.sort_priority.pagination(params)
+        @task = current_user.tasks.sort_priority.pagination(params)
       else
-        @task = Task.sort_created_at.pigenation(params)
+        @task = current_user.tasks.sort_created_at.pagination(params)
       end
     end
   end
@@ -25,8 +25,7 @@ class TasksController < ApplicationController
     @task = Task.new
   end
   def create
-    @task = Task.new(task_params)
-    # binding.irb
+    @task = current_user.tasks.build(task_params)
     if @task.save
       redirect_to task_path(@task.id), notice:"タスクを登録しました。"
     else

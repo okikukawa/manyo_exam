@@ -42,6 +42,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.8'
   gem 'factory_bot_rails'
   gem 'launchy'
+  gem 'database_cleaner'
 end
 
 group :development do
@@ -64,3 +65,5 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'kaminari'
+gem 'bcrypt', '3.1.11'
+gem 'faker'

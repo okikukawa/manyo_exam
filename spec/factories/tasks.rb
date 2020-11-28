@@ -13,4 +13,11 @@ FactoryBot.define do
     status { '完了' }
     priority { '中' }
   end
+  factory :third_task, class: Task do
+    title { 'Factoryで作ったデフォルトのタイトル３' }
+    content { 'Factoryで作ったデフォルトのコンテント３' }
+    deadline { '002020-12-20' }
+    status { '着手中' }
+    priority { '低' }
+  end
 end
