@@ -13,6 +13,10 @@
         <%= f.label :status, '　ステータス　' %>
         <%= f.select :status, Task.task_statuses.keys, include_blank:"-" %>
       </div>
+      <div class="search_status">>
+        <%= f.label :label_id, '　ラベル　' %>
+        <%= f.select :label_id, Label.all.collect{ |p|[p.name, p.id] }, include_blank:"-" %>
+      </div>
       <div class="search_btn">
         <%= f.submit "検索" %>
       </div>
@@ -30,6 +34,7 @@
           <th>ステータス</th>
           <th><%= link_to '終了期限 ▼',tasks_path(sort_expired: "true"), class:"sort" %></th>
           <th><%= link_to '優先度 ▼',tasks_path(sort_priority: "true"), class:"sort" %></th>
+          <th>ラベル</th>
         </tr>
       </div>
       <% @task.each do|task| %>
@@ -39,6 +44,9 @@
           <td><%= task.status %></td>
           <td><%= task.deadline %></td>
           <td><%= task.priority %></td>
+          <td><% task.labels.each do|label| %>
+            <%= label.name %><br>
+          <% end %></td>
           <td class="data_detail"><%= link_to '詳細',task_path(task.id),class:"label label-primary" %></td>
           <td class="data_edit"><%= link_to '編集',edit_task_path(task.id),class:"label label-primary" %></td>
           <td class="data_delete"><%= link_to '削除',task_path(task.id), method: :delete, data:{ confirm: "削除してもよろしいですか？"} ,class:"label label-danger" %></td>

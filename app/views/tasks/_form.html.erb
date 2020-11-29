@@ -26,6 +26,14 @@
     <%= f.label :priority %><br>
     <%= f.select :priority, Task.priorities.keys, include_blank:"選択してください" %>
   </div>
+  <div>
+    <% Label.all.each do |label| %>
+      <div>
+        <%= f.check_box :label_ids, { multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false }, label[:id] %>
+        <%= label.name %>
+      </div>
+    <% end %>
+  </div>
   <br>
   <%= f.submit "登録する" %>
   <br>
