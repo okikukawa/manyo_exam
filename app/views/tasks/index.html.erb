@@ -13,9 +13,11 @@
         <%= f.label :status, '　ステータス　' %>
         <%= f.select :status, Task.task_statuses.keys, include_blank:"-" %>
       </div>
-      <div class="search_status">>
+      <div class="search_status">
         <%= f.label :label_id, '　ラベル　' %>
-        <%= f.select :label_id, Label.all.collect{ |p|[p.name, p.id] }, include_blank:"-" %>
+        <% @default_user = User.find_by(id: 1) %>
+        <% @label_list = @default_user.labels + current_user.labels %>
+        <%= f.select :label_id, @label_list.collect{ |p|[p.name, p.id] }, include_blank:"-" %>
       </div>
       <div class="search_btn">
         <%= f.submit "検索" %>
@@ -54,7 +56,8 @@
       <% end %>
     </table>
   </div>
-  <%= link_to '新しくタスクを登録する',new_task_path, class:'btn btn-info' %>
+  <%= link_to 'タスクを登録する',new_task_path, class:'btn btn-info' %>
+  <%= link_to 'ラベルを登録する',new_label_path, class:'btn btn-info' %>
   <div class="paginate">
     <%= paginate @task %>
   </div>

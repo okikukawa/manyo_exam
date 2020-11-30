@@ -29,5 +29,6 @@ User.create!(name: "user2",
              admin: true
              )
 5.times do |n|
-  Label.create!(name: "ラベル#{n + 1}")
+  Label.create!(name: "ラベル#{n + 1}",
+                user_id: 1)
 end
