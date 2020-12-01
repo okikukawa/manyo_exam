@@ -8,8 +8,11 @@ class TasksController < ApplicationController
         @task = current_user.tasks.search_title(params[:task][:title]).search_status(params[:task][:status]).pagination(params)
       elsif params[:task][:title].present?
         @task = current_user.tasks.search_title(params[:task][:title]).pagination(params)
-      else params[:task][:status].present?
+      elsif params[:task][:status].present?
         @task = current_user.tasks.search_status(params[:task][:status]).pagination(params)
+      else params[:task][:label_id].present?
+        @task_label = TaskLabel.where(label_id: params[:task][:label_id]).pluck(:task_id)
+        @task = Task.where(id: @task_label).pagination(params)
       end
     elsif
       if params[:sort_expired].present?
@@ -49,7 +52,7 @@ class TasksController < ApplicationController
   end
   private
   def task_params
-    params.require(:task).permit(:title,:content,:deadline,:status,:priority)
+    params.require(:task).permit(:title,:content,:deadline,:status,:priority, { label_ids: []} )
   end
   def set_task
     @task = Task.find(params[:id])

@@ -13,6 +13,12 @@ class ApplicationController < ActionController::Base
       redirect_to tasks_path
     end
   end
+  def ensure_current_user_label_check
+    unless current_user.id == @label.user_id
+      flash[:danger] = '権限がありません。'
+      redirect_to tasks_path
+    end
+  end
   def ensure_current_user
     if logged_in?
       unless current_user.id == params[:id].to_i
