@@ -27,13 +27,24 @@
     <%= f.select :priority, Task.priorities.keys, include_blank:"選択してください" %>
   </div>
   <div>
-    <% @default_user = User.find_by(id: 1) %>
-    <% @label_list = @default_user.labels + current_user.labels %>
-    <% @label_list.each do |label| %>
-      <div>
-        <%= f.check_box :label_ids, { multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false }, label[:id] %>
-        <%= label.name %>
-      </div>
+    <% if current_user.id == 1 %>
+      <% @default_user = User.find_by(id: 1) %>
+      <% @label_list = @default_user.labels %>
+      <% @label_list.each do |label| %>
+        <div>
+          <%= f.check_box :label_ids, { multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false }, label[:id] %>
+          <%= f.label :label, label.name %>
+        </div>
+        <% end %>
+    <% else %>
+      <% @default_user = User.find_by(id: 1) %>
+      <% @label_list = @default_user.labels + current_user.labels %>
+      <% @label_list.each do |label| %>
+        <div>
+          <%= f.check_box :label_ids, { multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false }, label[:id] %>
+          <%= f.label :label, label.name %>
+        </div>
+      <% end %>
     <% end %>
   </div>
   <br>

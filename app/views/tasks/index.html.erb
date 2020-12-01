@@ -15,9 +15,15 @@
       </div>
       <div class="search_status">
         <%= f.label :label_id, '　ラベル　' %>
-        <% @default_user = User.find_by(id: 1) %>
-        <% @label_list = @default_user.labels + current_user.labels %>
-        <%= f.select :label_id, @label_list.collect{ |p|[p.name, p.id] }, include_blank:"-" %>
+        <% if current_user.id == 1 %>
+          <% @default_user = User.find_by(id: 1) %>
+          <% @label_list = @default_user.labels %>
+          <%= f.select :label_id, @label_list.collect{ |p|[p.name, p.id] }, include_blank:"-" %>
+        <% else %>
+          <% @default_user = User.find_by(id: 1) %>
+          <% @label_list = @default_user.labels + current_user.labels %>
+          <%= f.select :label_id, @label_list.collect{ |p|[p.name, p.id] }, include_blank:"-" %>
+        <% end %>
       </div>
       <div class="search_btn">
         <%= f.submit "検索" %>
@@ -40,8 +46,8 @@
         </tr>
       </div>
       <% @task.each do|task| %>
-        <tr>
-          <td class="task_row"><%= task.title %></td>
+        <tr class="task_row">
+          <td><%= task.title %></td>
           <td><%= task.content %></td>
           <td><%= task.status %></td>
           <td><%= task.deadline %></td>

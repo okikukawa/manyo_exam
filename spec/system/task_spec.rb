@@ -20,6 +20,8 @@ RSpec.describe 'タスク管理機能', type: :system do
         fill_in "終了期限", with: "002020-11-18"
         select "着手中", from: "ステータス"
         select "高", from: "優先度"
+        # binding.irb
+        # check ''
         click_button '登録する'
         expect(page).to have_content 'リュック買う'
       end
@@ -63,13 +65,13 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
   end
   describe '詳細表示機能' do
-     context '任意のタスク詳細画面に遷移した場合' do
-       it '該当タスクの内容が表示される' do
-         task = Task.find_by(title: "Factoryで作ったデフォルトのタイトル１")
-         visit task_path(task)
-         expect(page).to have_content 'Factoryで作ったデフォルトのタイトル１'
-       end
-     end
+    context '任意のタスク詳細画面に遷移した場合' do
+      it '該当タスクの内容が表示される' do
+        task = Task.find_by(title: "Factoryで作ったデフォルトのタイトル１")
+        visit task_path(task)
+        expect(page).to have_content 'Factoryで作ったデフォルトのタイトル１'
+      end
+    end
   end
   describe '検索機能' do
     before do

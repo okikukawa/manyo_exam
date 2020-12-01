@@ -47,7 +47,9 @@ RSpec.describe 'ユーザー管理機能'do
     end
     context 'ログアウトした場合'do
       it 'フラッシュメッセージとともにログイン画面が表示される'do
-        click_on 'ログアウト'
+        page.accept_confirm do
+          click_on 'ログアウト'
+        end
         expect(page).to have_content 'ログアウトしました。'
       end
     end
