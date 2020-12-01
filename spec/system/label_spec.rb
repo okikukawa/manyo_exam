@@ -56,8 +56,8 @@ RSpec.describe 'ラベル管理機能', type: :system do
         select "着手中", from: "ステータス"
         select "高", from: "優先度"
         #検証ツールにて判明したIDを指定
-        check 'task_label_ids_1'
-        check 'task_label_ids_2'
+        check 'ラベル１'
+        check 'ラベル２'
         click_button '登録する'
         visit tasks_path
         task_list = all('.task_row')
@@ -69,7 +69,7 @@ RSpec.describe 'ラベル管理機能', type: :system do
       it '任意のラベルの付け外しができる' do
         task = Task.find_by(title: "Factoryで作ったデフォルトのタイトル１")
         visit edit_task_path(task)
-        check 'task_label_ids_2'
+        check 'ラベル２'
         click_button '登録する'
         visit tasks_path
         task_list = all('.task_row')
